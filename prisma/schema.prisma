@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  slug        String   @unique
+  status      ProjectStatus @default(IN_PROGRESS)
+  techStack   String[]
+  why         String
+  features    String[]
+  imageUrl    String?
+  gallery     ProjectImage[]
+  demoUrl     String?
+  githubUrl   String?
+  category    String
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isPublic])
+  @@index([status])
+}
+
+type ProjectImage {
+  url   String
+  label String?
+}
+
+enum ProjectStatus {
+  PLANNING
+  IN_PROGRESS
+  COMPLETED
+  MAINTENANCE
+}
