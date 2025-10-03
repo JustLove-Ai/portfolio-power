@@ -1,5 +1,6 @@
 import { getAllProjects } from '@/app/actions/projects'
 import { ProjectList } from '@/components/admin/project-list'
+import { StatsCards } from '@/components/admin/stats-cards'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
@@ -40,8 +41,9 @@ export default async function AdminPage() {
         </div>
       </div>
 
-      {/* Projects List */}
+      {/* Stats and Projects */}
       <div className="max-w-7xl mx-auto px-4 py-12">
+        <StatsCards projects={projects} />
         <ProjectList projects={projects} />
       </div>
     </div>
